@@ -584,6 +584,11 @@ class AddApplicationChange(ChangeInfo):
             options["trust"] = "true"
 
         url = URL.parse(str(charm))
+
+        # set the channel to the default value if not specified
+        if not self.channel:
+            self.channel = "latest/stable"
+
         channel = None
         if self.channel is not None and self.channel != "":
             channel = Channel.parse(self.channel).normalize()
