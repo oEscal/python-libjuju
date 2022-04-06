@@ -587,7 +587,12 @@ class AddApplicationChange(ChangeInfo):
 
         # set the channel to the default value if not specified
         if not self.channel:
-            self.channel = "stable"
+            if Schema.CHARM_STORE.matches(url.schema):
+                self.channel = "stable"
+            elif Schema.CHARM_HUB.matches(url.schema):
+                self.channel = "latest/stable"
+            else:   # for local charms
+                self.channel = ""
 
         channel = None
         if self.channel is not None and self.channel != "":
