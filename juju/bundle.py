@@ -589,11 +589,8 @@ class AddApplicationChange(ChangeInfo):
             channel = Channel.parse(self.channel).normalize()
 
         ola = context.origins.get(str(url), {})
-        
-        log.info(str(url))
-        log.info(f"{str(ola)}")
-        log.info(str(channel))
         origin = ola.get(str(channel if channel is not None else ""), None)
+        raise JujuError(f"<{str(url)}>; <{str(channel)}>; <{str(ola)}>")
         if origin is None:
             raise JujuError("expected origin to be valid for application {} and charm {} with channel {}".format(self.application, str(url), str(channel)))
 
