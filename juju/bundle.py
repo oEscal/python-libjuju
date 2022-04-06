@@ -596,9 +596,9 @@ class AddApplicationChange(ChangeInfo):
 
         channel = None
         if self.channel is not None and self.channel != "":
-            channel = Channel.parse(self.channel).normalize()
+            channel = Channel.parse(self.channel)
 
-        origin = context.origins.get(str(url), {}).get(str(channel if channel is not None else "latest/stable"), None)
+        origin = context.origins.get(str(url), {}).get(str(channel), None)
         if origin is None:
             raise JujuError("expected origin to be valid for application {} and charm {} with channel {}".format(self.application, str(url), str(channel)))
 
